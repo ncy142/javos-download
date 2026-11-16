@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>JavOS herunterladen</title>
+<meta name="description" content="JavOS für Android, Windows und macOS herunterladen.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111114'/%3E%3Crect x='12' y='23' width='40' height='18' rx='6' fill='%23fff'/%3E%3Crect x='18' y='27' width='3' height='10' fill='%23111114'/%3E%3C/svg%3E">
+<style>
+  /* Daylight theme tokens from the app (ui/theme/Themes.kt). */
+  :root {
+    --page: #F4F4F7; --surface: #FFFFFF; --raised: #EDEDF2; --hairline: #DADAE2;
+    --control: #85858F; --text: #111114; --muted: #6B6B76;
+    --primary: #111114; --on-primary: #FFFFFF;
+    --accent: #A98BFF; --on-accent: #111114;
+    --soft-start: #F0E4FA; --soft-end: #A9B1FF; --on-soft: #111114;
+    --shadow: 0 1px 0 rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0F0F12; --surface: #1A1A1F; --raised: #24242A; --hairline: #2E2E36;
+      --control: #74747F; --text: #F4F4F7; --muted: #A0A0AB;
+      --primary: #F4F4F7; --on-primary: #000000;
+      --accent: #B7A0FF; --on-accent: #000000;
+      --soft-start: #2A2140; --soft-end: #4A4E9C; --on-soft: #FFFFFF;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--page); color: var(--text);
+    font: 16px/1.5 Poppins, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .logo { width: 44px; height: 44px; border-radius: 12px; background: var(--primary); display: grid; place-items: center; flex: none; }
+  .logo span { width: 26px; height: 12px; border-radius: 4px; background: var(--on-primary); position: relative; }
+  .logo span::after { content: ""; position: absolute; left: 4px; top: 2px; width: 2px; height: 8px; background: var(--primary); }
+  h1 { font-size: 28px; line-height: 34px; font-weight: 600; margin: 0; }
+  h2 { font-size: 20px; line-height: 26px; font-weight: 600; margin: 28px 0 12px; }
+  h3 { font-size: 16px; font-weight: 600; margin: 0; }
+  p { margin: 0 0 8px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; line-height: 20px; }
+  .tiny { font-size: 12px; line-height: 16px; }
+  .hero {
+    border-radius: 16px; padding: 20px; color: var(--on-soft);
+    background: linear-gradient(135deg, var(--soft-start), var(--soft-end));
+  }
+  .hero .version { font-size: 28px; font-weight: 600; line-height: 34px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+  .card.you { outline: 2px solid var(--accent); }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .chip { display: inline-block; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 500; background: var(--raised); color: var(--text); }
+  .chip.accent { background: var(--accent); color: var(--on-accent); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 10px 18px; border-radius: 14px; border: 0;
+    background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn.secondary { background: var(--raised); color: var(--text); border: 1px solid var(--control); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .icon { width: 28px; height: 28px; flex: none; }
+  ol { margin: 0; padding-left: 20px; }
+  ol li { margin-bottom: 6px; }
+  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--raised); border-radius: 6px; padding: 2px 6px; overflow-wrap: anywhere; }
+  details { background: var(--surface); border-radius: 16px; padding: 4px 16px; box-shadow: var(--shadow); margin-bottom: 10px; }
+  details[open] { padding-bottom: 14px; }
+  summary { cursor: pointer; font-weight: 600; min-height: 48px; display: flex; align-items: center; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; margin-left: auto; color: var(--muted); font-size: 22px; }
+  details[open] summary::after { content: "\2212"; }
+  .qr { background: #FFFFFF; padding: 10px; border-radius: 12px; width: max-content; }
+  .qr img, .qr canvas { display: block; }
+  .hash { font: 12px/1.4 ui-monospace, Consolas, monospace; color: var(--muted); overflow-wrap: anywhere; }
+  footer { margin-top: 32px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="logo" aria-hidden="true"><span></span></div>
+    <div>
+      <h1>JavOS</h1>
+      <div class="muted small" data-i18n="tagline">Ein Eingabefeld für jeden Gedanken.</div>
+    </div>
+  </header>
+
+  <section class="hero" aria-live="polite">
+    <div class="small" data-i18n="latest">Aktuelle Version</div>
+    <div class="version" id="version">…</div>
+    <div class="small" id="date"></div>
+  </section>
+
+  <h2 data-i18n="download">Herunterladen</h2>
+  <div class="grid" id="downloads">
+    <article class="card" data-platform="android">
+      <div class="row">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+        <h3>Android</h3>
+        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+      </div>
+      <p class="muted small" data-i18n="androidReq">Android 8.0 oder neuer. Auch für faltbare Handys.</p>
+      <a class="btn" data-file="apk" href="#" download><span data-i18n="downloadApk">APK herunterladen</span></a>
+      <div class="tiny muted" data-size="apk"></div>
+    </article>
+    <article class="card" data-platform="windows">
+      <div class="row">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <h3>Windows</h3>
+        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+      </div>
+      <p class="muted small" data-i18n="windowsReq">Windows 10 oder 11, 64 Bit.</p>
+      <a class="btn" data-file="msi" href="#" download><span data-i18n="downloadMsi">Installer (.msi) herunterladen</span></a>
+      <div class="tiny muted" data-size="msi"></div>
+    </article>
+    <article class="card" data-platform="mac">
+      <div class="row">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg>
+        <h3>macOS</h3>
+        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+      </div>
+      <p class="muted small" data-i18n="macReq">macOS 13 oder neuer, Apple-Silicon-Mac (M1 und neuer).</p>
+      <a class="btn" data-file="dmg" href="#" download><span data-i18n="downloadDmg">Image (.dmg) herunterladen</span></a>
+      <div class="tiny muted" data-size="dmg"></div>
+    </article>
+  </div>
+
+  <section id="phone" hidden>
+    <h2 data-i18n="onPhone">Am Handy öffnen</h2>
+    <div class="card">
+      <div class="row" style="align-items:flex-start">
+        <div class="qr" id="qr" aria-label="QR code"></div>
+        <div style="flex:1;min-width:200px">
+          <p data-i18n="scan">Scanne den Code mit der Handy-Kamera. Die Seite öffnet sich dort und bietet die APK an.</p>
+          <p class="small muted"><code id="pageUrl"></code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h2 data-i18n="install">Installieren</h2>
+  <details data-platform="android">
+    <summary>Android</summary>
+    <ol class="small">
+      <li data-i18n="a1">APK auf dem Handy herunterladen und in der Benachrichtigung oder unter „Downloads“ antippen.</li>
+      <li data-i18n="a2">Beim ersten Mal fragt Android, ob dein Browser „unbekannte Apps installieren“ darf: erlauben, zurück, „Installieren“.</li>
+      <li data-i18n="a3">JavOS starten und Benachrichtigungen erlauben (für Erinnerungen, Fokus-Timer und Schnell-Erfassung).</li>
+      <li data-i18n="a4">Neue Versionen installieren sich über die alte; deine Daten bleiben erhalten.</li>
+    </ol>
+    <p class="small muted" style="margin-top:8px"><span data-i18n="adb">Vom Computer mit USB-Debugging:</span> <code>adb install -r JavOS-debug.apk</code></p>
+  </details>
+  <details data-platform="windows">
+    <summary>Windows</summary>
+    <ol class="small">
+      <li data-i18n="w1">Die .msi-Datei ausführen.</li>
+      <li data-i18n="w2">Der Installer ist nicht signiert. Wenn SmartScreen „Der Computer wurde durch Windows geschützt“ zeigt: „Weitere Informationen“, dann „Trotzdem ausführen“.</li>
+      <li data-i18n="w3">JavOS steht danach im Startmenü. Schließen des Fensters lässt es im Infobereich (Tray) weiterlaufen; Beenden über das Tray-Menü.</li>
+      <li data-i18n="w4">Schnell festhalten von überall: Strg+Umschalt+Leertaste.</li>
+    </ol>
+  </details>
+  <details data-platform="mac">
+    <summary>macOS</summary>
+    <ol class="small">
+      <li data-i18n="m1">Die .dmg öffnen und JavOS in den Ordner „Programme“ ziehen.</li>
+      <li data-i18n="m2">Die App ist nicht signiert. Beim ersten Start: Rechtsklick auf JavOS, „Öffnen“, bestätigen.</li>
+      <li><span data-i18n="m3">Oder einmal im Terminal:</span> <code>xattr -dr com.apple.quarantine /Applications/JavOS.app</code></li>
+      <li data-i18n="m4">Für das Tastenkürzel Cmd+Umschalt+Leertaste: Systemeinstellungen › Datenschutz &amp; Sicherheit › Bedienungshilfen › JavOS erlauben.</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary data-i18n="checksums">Prüfsummen (SHA-256)</summary>
+    <div class="small" id="hashes"></div>
+  </details>
+
+  <footer class="small muted">
+    <p data-i18n="offline">JavOS arbeitet komplett offline: kein Konto, kein Netzwerk, keine Telemetrie. Deine Daten bleiben auf deinem Gerät.</p>
+    <p class="tiny" data-i18n="unsigned">Die Builds sind nicht signiert (Android: Debug-Build). Lade sie nur von dieser Seite.</p>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+        integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function () {
+  var en = {
+    tagline: "One capture box for every thought.",
+    latest: "Latest version",
+    download: "Download",
+    yourDevice: "Your device",
+    androidReq: "Android 8.0 or newer. Works on foldables too.",
+    windowsReq: "Windows 10 or 11, 64-bit.",
+    macReq: "macOS 13 or newer, Apple silicon Mac (M1 and newer).",
+    downloadApk: "Download APK",
+    downloadMsi: "Download installer (.msi)",
+    downloadDmg: "Download disk image (.dmg)",
+    onPhone: "Open on your phone",
+    scan: "Scan the code with your phone camera. The page opens there and offers the APK.",
+    install: "Install",
+    a1: "Download the APK on the phone and tap it in the notification or in Downloads.",
+    a2: "The first time, Android asks whether your browser may “install unknown apps”: allow it, go back, tap Install.",
+    a3: "Start JavOS and allow notifications (reminders, focus timer, quick capture).",
+    a4: "New versions install over the old one; your data stays.",
+    adb: "From a computer with USB debugging:",
+    w1: "Run the .msi file.",
+    w2: "The installer is not signed. If SmartScreen says “Windows protected your PC”: More info, then Run anyway.",
+    w3: "JavOS is then in the Start menu. Closing the window keeps it running in the tray; quit from the tray menu.",
+    w4: "Capture from anywhere: Ctrl+Shift+Space.",
+    m1: "Open the .dmg and drag JavOS to Applications.",
+    m2: "The app is not signed. The first time: right-click JavOS, Open, confirm.",
+    m3: "Or once in Terminal:",
+    m4: "For the Cmd+Shift+Space shortcut: System Settings › Privacy & Security › Accessibility › allow JavOS.",
+    checksums: "Checksums (SHA-256)",
+    offline: "JavOS works fully offline: no account, no network, no telemetry. Your data stays on your device.",
+    unsigned: "The builds are not signed (Android: debug build). Only download them from this page."
+  };
+  var lang = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+  if (lang === "en") {
+    document.documentElement.lang = "en";
+    document.title = "Download JavOS";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (en[key]) el.textContent = en[key];
+    });
+  }
+
+  // Which device is this? Used to highlight the right download and open its install steps.
+  var ua = navigator.userAgent || "";
+  var platform = /Android/i.test(ua) ? "android"
+    : /iPhone|iPad|iPod/i.test(ua) ? "ios"
+    : /Mac/i.test(ua) && navigator.maxTouchPoints > 1 ? "ios"
+    : /Mac/i.test(ua) ? "mac"
+    : /Win/i.test(ua) ? "windows" : "other";
+  if (platform === "android" || platform === "windows" || platform === "mac") {
+    var card = document.querySelector('.card[data-platform="' + platform + '"]');
+    if (card) {
+      card.classList.add("you");
+      card.querySelector("[data-you]").hidden = false;
+      card.parentNode.insertBefore(card, card.parentNode.firstChild);
+    }
+    var steps = document.querySelector('details[data-platform="' + platform + '"]');
+    if (steps) steps.open = true;
+  }
+  document.querySelectorAll('.card:not([data-platform="' + platform + '"]) .btn').forEach(function (b) {
+    if (platform !== "other" && platform !== "ios") b.classList.add("secondary");
+  });
+
+  // On a computer, show a QR code so the phone can open this page.
+  var pageUrl = location.href.split("#")[0];
+  document.getElementById("pageUrl").textContent = pageUrl;
+  if (platform !== "android" && platform !== "ios" && window.QRCode) {
+    document.getElementById("phone").hidden = false;
+    new QRCode(document.getElementById("qr"), { text: pageUrl, width: 148, height: 148, colorDark: "#111114", colorLight: "#FFFFFF", correctLevel: QRCode.CorrectLevel.M });
+  }
+
+  function size(bytes) {
+    var mb = bytes / 1048576;
+    return (lang === "de" ? mb.toFixed(1).replace(".", ",") : mb.toFixed(1)) + " MB";
+  }
+
+  fetch("release.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (rel) {
+    document.getElementById("version").textContent = rel.version;
+    var d = new Date(rel.published);
+    var dateText = lang === "de"
+      ? d.toLocaleDateString("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" })
+      : d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    document.getElementById("date").textContent = (lang === "de" ? "Veröffentlicht am " : "Released ") + dateText;
+    var hashes = [];
+    Object.keys(rel.files).forEach(function (key) {
+      var f = rel.files[key];
+      var link = document.querySelector('[data-file="' + key + '"]');
+      if (link) { link.href = f.url; link.setAttribute("download", f.name); }
+      var s = document.querySelector('[data-size="' + key + '"]');
+      if (s) s.textContent = f.name + " · " + size(f.size);
+      hashes.push('<p><strong>' + f.name + '</strong><br><span class="hash">' + f.sha256 + '</span></p>');
+    });
+    document.getElementById("hashes").innerHTML = hashes.join("");
+  }).catch(function () {
+    document.getElementById("version").textContent = "–";
+  });
+})();
+</script>
+</body>
+</html>
