@@ -4,186 +4,423 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>JavOS herunterladen</title>
-<meta name="description" content="JavOS für Android, Windows und macOS herunterladen.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111114'/%3E%3Crect x='12' y='23' width='40' height='18' rx='6' fill='%23fff'/%3E%3Crect x='18' y='27' width='3' height='10' fill='%23111114'/%3E%3C/svg%3E">
+<title>JavOS – Ein Eingabefeld für jeden Gedanken</title>
+<meta name="description" content="JavOS für Android, Windows und macOS. Offline, ohne Konto.">
+<meta name="theme-color" content="#F4F4F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F12" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="JavOS">
+<meta property="og:description" content="Ein Eingabefeld für jeden Gedanken. Für Android, Windows und macOS.">
+<meta property="og:image" content="assets/icon-256.png">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
+  @font-face { font-family: "Poppins"; font-weight: 400; font-display: swap; src: url("assets/fonts/poppins_regular.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 500; font-display: swap; src: url("assets/fonts/poppins_medium.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 600; font-display: swap; src: url("assets/fonts/poppins_semibold.ttf") format("truetype"); }
+
   /* Daylight theme tokens from the app (ui/theme/Themes.kt). */
   :root {
     --page: #F4F4F7; --surface: #FFFFFF; --raised: #EDEDF2; --hairline: #DADAE2;
     --control: #85858F; --text: #111114; --muted: #6B6B76;
     --primary: #111114; --on-primary: #FFFFFF;
-    --accent: #A98BFF; --on-accent: #111114;
+    --accent: #A98BFF; --accent-ink: #6B46E0; --on-accent: #111114;
     --soft-start: #F0E4FA; --soft-end: #A9B1FF; --on-soft: #111114;
-    --shadow: 0 1px 0 rgba(0,0,0,.04);
+    --glow: rgba(169, 139, 255, .35);
+    --card-shadow: 0 1px 2px rgba(17,17,20,.04), 0 8px 24px rgba(17,17,20,.06);
+    --frame: #111114;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --page: #0F0F12; --surface: #1A1A1F; --raised: #24242A; --hairline: #2E2E36;
       --control: #74747F; --text: #F4F4F7; --muted: #A0A0AB;
       --primary: #F4F4F7; --on-primary: #000000;
-      --accent: #B7A0FF; --on-accent: #000000;
+      --accent: #B7A0FF; --accent-ink: #B7A0FF; --on-accent: #000000;
       --soft-start: #2A2140; --soft-end: #4A4E9C; --on-soft: #FFFFFF;
-      --shadow: none;
+      --glow: rgba(120, 100, 220, .30);
+      --card-shadow: 0 0 0 1px #2E2E36;
+      --frame: #2E2E36;
     }
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--page); color: var(--text);
-    font: 16px/1.5 Poppins, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font: 16px/1.6 Poppins, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 48px; }
-  header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .logo { width: 44px; height: 44px; border-radius: 12px; background: var(--primary); display: grid; place-items: center; flex: none; }
-  .logo span { width: 26px; height: 12px; border-radius: 4px; background: var(--on-primary); position: relative; }
-  .logo span::after { content: ""; position: absolute; left: 4px; top: 2px; width: 2px; height: 8px; background: var(--primary); }
-  h1 { font-size: 28px; line-height: 34px; font-weight: 600; margin: 0; }
-  h2 { font-size: 20px; line-height: 26px; font-weight: 600; margin: 28px 0 12px; }
-  h3 { font-size: 16px; font-weight: 600; margin: 0; }
-  p { margin: 0 0 8px; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
   .muted { color: var(--muted); }
-  .small { font-size: 14px; line-height: 20px; }
-  .tiny { font-size: 12px; line-height: 16px; }
-  .hero {
-    border-radius: 16px; padding: 20px; color: var(--on-soft);
-    background: linear-gradient(135deg, var(--soft-start), var(--soft-end));
-  }
-  .hero .version { font-size: 28px; font-weight: 600; line-height: 34px; }
-  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-  .card { background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
-  .card.you { outline: 2px solid var(--accent); }
-  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .chip { display: inline-block; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 500; background: var(--raised); color: var(--text); }
-  .chip.accent { background: var(--accent); color: var(--on-accent); }
+  .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: .02em; color: var(--muted); }
+
+  /* Navigation */
+  .nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--page) 85%, transparent); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; }
+  .nav.scrolled { border-bottom-color: var(--hairline); }
+  .nav .wrap { display: flex; align-items: center; gap: 12px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 18px; }
+  .brand img { width: 32px; height: 32px; }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .nav-links a.link { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--muted); padding: 10px 12px; border-radius: 10px; }
+  .nav-links a.link:hover { color: var(--text); background: var(--raised); }
+  @media (max-width: 720px) { .nav-links a.link { display: none; } }
+
+  /* Buttons */
   .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-height: 48px; padding: 10px 18px; border-radius: 14px; border: 0;
-    background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 600;
-    text-decoration: none; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 48px; padding: 12px 22px; border-radius: 14px; border: 0;
+    background: var(--primary); color: var(--on-primary); font: inherit; font-weight: 600; font-size: 15px;
+    text-decoration: none; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease;
   }
-  .btn.secondary { background: var(--raised); color: var(--text); border: 1px solid var(--control); }
-  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-  .icon { width: 28px; height: 28px; flex: none; }
-  ol { margin: 0; padding-left: 20px; }
-  ol li { margin-bottom: 6px; }
-  code { font: 13px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--raised); border-radius: 6px; padding: 2px 6px; overflow-wrap: anywhere; }
-  details { background: var(--surface); border-radius: 16px; padding: 4px 16px; box-shadow: var(--shadow); margin-bottom: 10px; }
-  details[open] { padding-bottom: 14px; }
-  summary { cursor: pointer; font-weight: 600; min-height: 48px; display: flex; align-items: center; list-style: none; }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(17,17,20,.18); }
+  .btn.secondary { background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px var(--control); }
+  .btn.secondary:hover { box-shadow: inset 0 0 0 1px var(--text); }
+  .btn.small { min-height: 40px; padding: 8px 14px; font-size: 14px; border-radius: 12px; }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding: 56px 0 72px; }
+  .hero::before { content: ""; position: absolute; inset: -20% -10% auto auto; width: 720px; height: 720px; background: radial-gradient(closest-side, var(--glow), transparent); pointer-events: none; }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } .hero { padding-top: 32px; } }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; background: var(--surface); box-shadow: var(--card-shadow); font-size: 13px; font-weight: 500; }
+  .pill b { background: var(--primary); color: var(--on-primary); border-radius: 999px; padding: 2px 10px; font-weight: 600; }
+  h1 { font-size: clamp(36px, 5.4vw, 60px); line-height: 1.06; letter-spacing: -.025em; font-weight: 600; margin: 20px 0 16px; }
+  h1 .hl { background: linear-gradient(90deg, var(--accent-ink), #8E7CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-size: 14px; color: var(--muted); }
+  .facts span { display: inline-flex; align-items: center; gap: 6px; }
+  .facts svg { width: 16px; height: 16px; color: var(--accent-ink); }
+
+  /* Device frames */
+  .stage { position: relative; height: 560px; }
+  @media (max-width: 900px) { .stage { height: 520px; max-width: 460px; margin: 0 auto; width: 100%; } }
+  .phone { position: absolute; width: 250px; border-radius: 34px; padding: 9px; background: var(--frame); box-shadow: 0 24px 60px rgba(17,17,20,.22), 0 2px 6px rgba(17,17,20,.12); }
+  .phone img { border-radius: 26px; aspect-ratio: 412 / 915; object-fit: cover; width: 100%; }
+  .phone.front { left: 50%; top: 0; transform: translateX(-60%); z-index: 2; }
+  .phone.back { left: 50%; top: 52px; transform: translateX(-2%) rotate(5deg); z-index: 1; opacity: .96; }
+  @media (max-width: 480px) { .phone { width: 210px; } .stage { height: 460px; } }
+
+  section { padding: 72px 0; }
+  .section-head { max-width: 640px; margin-bottom: 36px; }
+  h2 { font-size: clamp(28px, 3.4vw, 38px); line-height: 1.15; letter-spacing: -.02em; font-weight: 600; margin: 8px 0 12px; }
+  h3 { font-size: 17px; line-height: 1.35; font-weight: 600; margin: 0 0 6px; }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature { background: var(--surface); border-radius: 20px; padding: 24px; box-shadow: var(--card-shadow); }
+  .feature .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--raised); margin-bottom: 16px; }
+  .feature .ico svg { width: 22px; height: 22px; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+  .feature.wide { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, var(--soft-start), var(--soft-end)); color: var(--on-soft); display: flex; flex-direction: column; }
+  .feature.wide .example { margin-top: auto; padding-top: 18px; }
+  @media (max-width: 900px) { .feature.wide { grid-row: span 1; } }
+  .feature.wide p { color: var(--on-soft); opacity: .85; }
+  .feature.wide .ico { background: rgba(255,255,255,.55); }
+  @media (max-width: 600px) { .feature.wide { grid-column: span 1; } }
+  .example { margin-top: 18px; display: grid; gap: 8px; }
+  .example div { background: rgba(255,255,255,.7); color: #111114; border-radius: 12px; padding: 10px 14px; font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .example b { font-weight: 600; }
+  .example span { color: #4A4A55; }
+
+  /* Desktop showcase */
+  .window { border-radius: 14px; overflow: hidden; background: var(--surface); box-shadow: 0 30px 80px rgba(17,17,20,.18), 0 0 0 1px var(--hairline); }
+  .window .bar { height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 14px; background: var(--raised); border-bottom: 1px solid var(--hairline); }
+  .window .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--hairline); }
+  .window .bar small { margin-left: 8px; font-size: 12px; color: var(--muted); font-weight: 500; }
+
+  /* Themes */
+  .themes { display: grid; grid-auto-flow: column; grid-auto-columns: 200px; gap: 20px; overflow-x: auto; padding: 8px 4px 20px; scroll-snap-type: x mandatory; }
+  .themes figure { margin: 0; scroll-snap-align: start; }
+  .themes .phone { position: static; width: 100%; border-radius: 28px; padding: 7px; box-shadow: var(--card-shadow); }
+  .themes .phone img { border-radius: 22px; }
+  .themes figcaption { margin-top: 12px; font-weight: 600; font-size: 15px; }
+  .themes figcaption span { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+
+  /* Downloads */
+  .downloads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .downloads { grid-template-columns: 1fr; } }
+  .dl { background: var(--surface); border-radius: 20px; padding: 24px; box-shadow: var(--card-shadow); display: flex; flex-direction: column; gap: 14px; position: relative; }
+  .dl.you { box-shadow: 0 0 0 2px var(--accent), var(--card-shadow); }
+  .dl .head { display: flex; align-items: center; gap: 14px; }
+  .dl .head svg { width: 40px; height: 40px; flex: none; }
+  .dl .head h3 { margin: 0; font-size: 20px; }
+  .dl .req { color: var(--muted); font-size: 14px; margin: 0; flex: 1; }
+  .dl .meta { font-size: 12px; color: var(--muted); }
+  .tag { position: absolute; top: 20px; right: 20px; font-size: 12px; font-weight: 600; background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 3px 10px; }
+  .qr-card { margin-top: 16px; display: flex; align-items: center; gap: 24px; background: var(--surface); border-radius: 20px; padding: 20px 24px; box-shadow: var(--card-shadow); }
+  .qr-card .qr { background: #FFFFFF; padding: 8px; border-radius: 12px; flex: none; }
+  .qr-card .qr img, .qr-card .qr canvas { display: block; }
+  .qr-card p { margin: 0; }
+
+  /* Install */
+  .install { display: grid; gap: 12px; }
+  details { background: var(--surface); border-radius: 18px; box-shadow: var(--card-shadow); }
+  summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 14px; padding: 18px 22px; font-weight: 600; min-height: 48px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; margin-left: auto; color: var(--muted); font-size: 22px; }
-  details[open] summary::after { content: "\2212"; }
-  .qr { background: #FFFFFF; padding: 10px; border-radius: 12px; width: max-content; }
-  .qr img, .qr canvas { display: block; }
-  .hash { font: 12px/1.4 ui-monospace, Consolas, monospace; color: var(--muted); overflow-wrap: anywhere; }
-  footer { margin-top: 32px; }
+  summary svg { width: 24px; height: 24px; flex: none; }
+  summary::after { content: ""; margin-left: auto; width: 10px; height: 10px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s; }
+  details[open] summary::after { transform: rotate(-135deg); }
+  .steps { counter-reset: step; list-style: none; margin: 0; padding: 0 22px 20px; display: grid; gap: 12px; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 15px; }
+  .steps li::before { content: counter(step); width: 28px; height: 28px; border-radius: 50%; background: var(--raised); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
+  .note { padding: 0 22px 20px; font-size: 14px; color: var(--muted); }
+  code { font: 13px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--raised); border-radius: 6px; padding: 2px 7px; overflow-wrap: anywhere; }
+  .hash { font: 12px/1.5 ui-monospace, Consolas, monospace; color: var(--muted); overflow-wrap: anywhere; }
+
+  /* Privacy */
+  .privacy { background: var(--primary); color: var(--on-primary); border-radius: 28px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .privacy h2 { margin-top: 0; }
+  .privacy p { opacity: .8; margin: 0; }
+  .privacy ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .privacy li { display: flex; gap: 12px; align-items: flex-start; }
+  .privacy li svg { width: 22px; height: 22px; flex: none; color: var(--accent); margin-top: 2px; }
+  @media (max-width: 800px) { .privacy { grid-template-columns: 1fr; padding: 32px 24px; } }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; border-top: 1px solid var(--hairline); padding-top: 24px; }
+  footer .brand { font-size: 15px; color: var(--text); }
+  footer .brand img { width: 24px; height: 24px; }
   [hidden] { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <div class="logo" aria-hidden="true"><span></span></div>
-    <div>
-      <h1>JavOS</h1>
-      <div class="muted small" data-i18n="tagline">Ein Eingabefeld für jeden Gedanken.</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/icon.svg" alt="" width="32" height="32">JavOS</a>
+    <nav class="nav-links" aria-label="Seite">
+      <a class="link" href="#features" data-i18n="navFeatures">Funktionen</a>
+      <a class="link" href="#themes" data-i18n="navThemes">Designs</a>
+      <a class="link" href="#install" data-i18n="navInstall">Installation</a>
+      <a class="btn small" href="#download" data-i18n="navDownload">Herunterladen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="pill"><b id="versionPill">1.0</b><span data-i18n="pill">Android · Windows · macOS</span></span>
+        <h1><span data-i18n="h1a">Ein Eingabefeld für</span> <span class="hl" data-i18n="h1b">jeden Gedanken.</span></h1>
+        <p class="lead" data-i18n="lead">Schreib auf, was dir durch den Kopf geht. JavOS speichert es sofort, schlägt vor, was es ist – Frist, Idee, Projekt – und zeigt dir jeden Tag höchstens drei Dinge.</p>
+        <div class="cta">
+          <a class="btn" id="primaryCta" href="#download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+            <span id="primaryCtaText" data-i18n="ctaAll">Herunterladen</span>
+          </a>
+          <a class="btn secondary" href="#download" id="otherCta" data-i18n="ctaOther">Alle Plattformen</a>
+        </div>
+        <div class="facts">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="fact1">Kostenlos</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="fact2">Komplett offline</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="fact3">Kein Konto</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="fact4">Deutsch &amp; Englisch</span></span>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="phone back"><img src="assets/screens/phone-cluster-dark-de.png" data-shot alt="" loading="eager"></div>
+        <div class="phone front"><img src="assets/screens/phone-daylight-light-de.png" data-shot alt="" loading="eager"></div>
+      </div>
     </div>
-  </header>
-
-  <section class="hero" aria-live="polite">
-    <div class="small" data-i18n="latest">Aktuelle Version</div>
-    <div class="version" id="version">…</div>
-    <div class="small" id="date"></div>
-  </section>
-
-  <h2 data-i18n="download">Herunterladen</h2>
-  <div class="grid" id="downloads">
-    <article class="card" data-platform="android">
-      <div class="row">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
-        <h3>Android</h3>
-        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
-      </div>
-      <p class="muted small" data-i18n="androidReq">Android 8.0 oder neuer. Auch für faltbare Handys.</p>
-      <a class="btn" data-file="apk" href="#" download><span data-i18n="downloadApk">APK herunterladen</span></a>
-      <div class="tiny muted" data-size="apk"></div>
-    </article>
-    <article class="card" data-platform="windows">
-      <div class="row">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        <h3>Windows</h3>
-        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
-      </div>
-      <p class="muted small" data-i18n="windowsReq">Windows 10 oder 11, 64 Bit.</p>
-      <a class="btn" data-file="msi" href="#" download><span data-i18n="downloadMsi">Installer (.msi) herunterladen</span></a>
-      <div class="tiny muted" data-size="msi"></div>
-    </article>
-    <article class="card" data-platform="mac">
-      <div class="row">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg>
-        <h3>macOS</h3>
-        <span class="chip accent" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
-      </div>
-      <p class="muted small" data-i18n="macReq">macOS 13 oder neuer, Apple-Silicon-Mac (M1 und neuer).</p>
-      <a class="btn" data-file="dmg" href="#" download><span data-i18n="downloadDmg">Image (.dmg) herunterladen</span></a>
-      <div class="tiny muted" data-size="dmg"></div>
-    </article>
   </div>
 
-  <section id="phone" hidden>
-    <h2 data-i18n="onPhone">Am Handy öffnen</h2>
-    <div class="card">
-      <div class="row" style="align-items:flex-start">
-        <div class="qr" id="qr" aria-label="QR code"></div>
-        <div style="flex:1;min-width:200px">
-          <p data-i18n="scan">Scanne den Code mit der Handy-Kamera. Die Seite öffnet sich dort und bietet die APK an.</p>
-          <p class="small muted"><code id="pageUrl"></code></p>
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="featEyebrow">Funktionen</div>
+        <h2 data-i18n="featTitle">Klein genug, um dranzubleiben.</h2>
+        <p class="muted" data-i18n="featLead">Gemacht für kurze Arbeitsphasen von 15 bis 20 Minuten. Keine Listen, die explodieren – nur das, was heute zählt.</p>
+      </div>
+      <div class="features">
+        <div class="feature wide">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3zM9 18h6M10 21h4"/></svg></div>
+          <h3 data-i18n="f1t">Versteht Deutsch und Englisch</h3>
+          <p data-i18n="f1p">„bis Freitag“, „by Friday“, „20.11. um 14 Uhr“, „12,50 €“, Links und Projektnamen. Was eindeutig ist, wird sofort einsortiert; bei allem anderen fragt JavOS „Meintest du?“ – ohne dich zu unterbrechen.</p>
+          <div class="example">
+            <div><b>ÖGK Rechnung bis Freitag 45,50 €</b><span data-i18n="ex1">→ Frist · Fr 20.11. · 45,50 €</span></div>
+            <div><b>Idee: Regal für die Küche</b><span data-i18n="ex2">→ Idee</span></div>
+            <div><b>JavOS: Themes ausprobieren</b><span data-i18n="ex3">→ Projekt JavOS</span></div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 1 0 0-8zM12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
+          <h3 data-i18n="f2t">Heute: höchstens drei Dinge</h3>
+          <p data-i18n="f2p">Überfälliges zuerst, dann was heute fällig ist, dann ein nächster Schritt pro Projekt. Starten, tauschen oder überspringen.</p>
+        </div>
+        <div class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7a7 7 0 1 0 0 14 7 7 0 1 0 0-14zM12 11v3.5M9.5 3h5"/></svg></div>
+          <h3 data-i18n="f3t">Fokus-Timer</h3>
+          <p data-i18n="f3p">15, 20 oder eigene Minuten. Läuft im Hintergrund weiter und meldet sich, wenn die Zeit um ist.</p>
+        </div>
+        <div class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></div>
+          <h3 data-i18n="f4t">Module nach Bedarf</h3>
+          <p data-i18n="f4p">Fristen mit Erinnerungen, Projekte (max. drei aktiv), Notizen mit Markdown, Rechner für Dreisatz, MwSt., kW/PS und Fahrtkosten. Alles einzeln abschaltbar.</p>
+        </div>
+        <div class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></svg></div>
+          <h3 data-i18n="f5t">Wochenrückblick</h3>
+          <p data-i18n="f5p">Was erledigt ist, was liegen blieb, welche Projekte seit drei Wochen ruhen – parken oder verwerfen?</p>
+        </div>
+        <div class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></div>
+          <h3 data-i18n="f6t">Von überall festhalten</h3>
+          <p data-i18n="f6p">Teilen-Menü, Spracheingabe, Antwort direkt in der Benachrichtigung und ein Widget am Handy. Am Computer: Strg/Cmd + Umschalt + Leertaste.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <h2 data-i18n="install">Installieren</h2>
-  <details data-platform="android">
-    <summary>Android</summary>
-    <ol class="small">
-      <li data-i18n="a1">APK auf dem Handy herunterladen und in der Benachrichtigung oder unter „Downloads“ antippen.</li>
-      <li data-i18n="a2">Beim ersten Mal fragt Android, ob dein Browser „unbekannte Apps installieren“ darf: erlauben, zurück, „Installieren“.</li>
-      <li data-i18n="a3">JavOS starten und Benachrichtigungen erlauben (für Erinnerungen, Fokus-Timer und Schnell-Erfassung).</li>
-      <li data-i18n="a4">Neue Versionen installieren sich über die alte; deine Daten bleiben erhalten.</li>
-    </ol>
-    <p class="small muted" style="margin-top:8px"><span data-i18n="adb">Vom Computer mit USB-Debugging:</span> <code>adb install -r JavOS-debug.apk</code></p>
-  </details>
-  <details data-platform="windows">
-    <summary>Windows</summary>
-    <ol class="small">
-      <li data-i18n="w1">Die .msi-Datei ausführen.</li>
-      <li data-i18n="w2">Der Installer ist nicht signiert. Wenn SmartScreen „Der Computer wurde durch Windows geschützt“ zeigt: „Weitere Informationen“, dann „Trotzdem ausführen“.</li>
-      <li data-i18n="w3">JavOS steht danach im Startmenü. Schließen des Fensters lässt es im Infobereich (Tray) weiterlaufen; Beenden über das Tray-Menü.</li>
-      <li data-i18n="w4">Schnell festhalten von überall: Strg+Umschalt+Leertaste.</li>
-    </ol>
-  </details>
-  <details data-platform="mac">
-    <summary>macOS</summary>
-    <ol class="small">
-      <li data-i18n="m1">Die .dmg öffnen und JavOS in den Ordner „Programme“ ziehen.</li>
-      <li data-i18n="m2">Die App ist nicht signiert. Beim ersten Start: Rechtsklick auf JavOS, „Öffnen“, bestätigen.</li>
-      <li><span data-i18n="m3">Oder einmal im Terminal:</span> <code>xattr -dr com.apple.quarantine /Applications/JavOS.app</code></li>
-      <li data-i18n="m4">Für das Tastenkürzel Cmd+Umschalt+Leertaste: Systemeinstellungen › Datenschutz &amp; Sicherheit › Bedienungshilfen › JavOS erlauben.</li>
-    </ol>
-  </details>
+  <section id="desktop" style="padding-top:0">
+    <div class="wrap">
+      <div class="window">
+        <div class="bar"><i></i><i></i><i></i><small>JavOS</small></div>
+        <img id="desktopShot" src="assets/screens/desktop-projects-de.png" data-shot alt="JavOS am Desktop: Projekte mit Liste und Detail" loading="lazy" width="1280" height="800">
+      </div>
+    </div>
+  </section>
 
-  <details>
-    <summary data-i18n="checksums">Prüfsummen (SHA-256)</summary>
-    <div class="small" id="hashes"></div>
-  </details>
+  <section id="themes">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="themesEyebrow">Designs</div>
+        <h2 data-i18n="themesTitle">Fünf Designs, jedes hell und dunkel.</h2>
+        <p class="muted" data-i18n="themesLead">Wechsle jederzeit in den Einstellungen – sofort, ohne Neustart.</p>
+      </div>
+      <div class="themes">
+        <figure><div class="phone"><img src="assets/screens/phone-daylight-light-de.png" data-shot alt="Daylight" loading="lazy"></div><figcaption>Daylight<span data-i18n="tDaylight">Hell, freundlich, rund</span></figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/phone-cluster-dark-de.png" data-shot alt="Cluster" loading="lazy"></div><figcaption>Cluster<span data-i18n="tCluster">Schwarz mit Instrumenten-Anzeigen</span></figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/phone-schematic-dark-de.png" data-shot alt="Schematic" loading="lazy"></div><figcaption>Schematic<span data-i18n="tSchematic">Wie eine technische Zeichnung</span></figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/phone-hochvolt-dark-de.png" data-shot alt="Hochvolt" loading="lazy"></div><figcaption>Hochvolt<span data-i18n="tHochvolt">Anthrazit mit Hochvolt-Orange</span></figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/phone-fable-light-de.png" data-shot alt="Fable" loading="lazy"></div><figcaption>Fable<span data-i18n="tFable">Ein ruhiges Notizbuch</span></figcaption></figure>
+        <figure><div class="phone"><img src="assets/screens/phone-daylight-dark-de.png" data-shot alt="Daylight dunkel" loading="lazy"></div><figcaption>Daylight<span data-i18n="tDaylightDark">Dunkler Modus</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
 
-  <footer class="small muted">
-    <p data-i18n="offline">JavOS arbeitet komplett offline: kein Konto, kein Netzwerk, keine Telemetrie. Deine Daten bleiben auf deinem Gerät.</p>
-    <p class="tiny" data-i18n="unsigned">Die Builds sind nicht signiert (Android: Debug-Build). Lade sie nur von dieser Seite.</p>
-  </footer>
+  <section id="download">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="dlEyebrow">Herunterladen</div>
+        <h2 data-i18n="dlTitle">Für alle deine Geräte.</h2>
+        <p class="muted"><span data-i18n="dlLead">Version</span> <b id="version">1.0</b> · <span id="date"></span></p>
+      </div>
+      <div class="downloads" id="downloads">
+        <article class="dl" data-platform="android">
+          <span class="tag" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+          <div class="head">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--raised)"/><rect x="13" y="7" width="14" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 29h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3>Android</h3>
+          </div>
+          <p class="req" data-i18n="androidReq">Android 8.0 oder neuer. Auch für faltbare Handys wie das Honor Magic V5.</p>
+          <a class="btn" data-file="apk" href="#" download><span data-i18n="downloadApk">APK herunterladen</span></a>
+          <div class="meta" data-size="apk"></div>
+        </article>
+        <article class="dl" data-platform="windows">
+          <span class="tag" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+          <div class="head">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--raised)"/><path d="M10 12.5l8.5-1.2v8.2H10zM20 11.1l10-1.4v9.8H20zM10 21h8.5v8.2L10 28zM20 21h10v9.8l-10-1.4z" fill="currentColor"/></svg>
+            <h3>Windows</h3>
+          </div>
+          <p class="req" data-i18n="windowsReq">Windows 10 oder 11, 64 Bit. Läuft im Infobereich weiter.</p>
+          <a class="btn" data-file="msi" href="#" download><span data-i18n="downloadMsi">Installer herunterladen</span></a>
+          <div class="meta" data-size="msi"></div>
+        </article>
+        <article class="dl" data-platform="mac">
+          <span class="tag" hidden data-you data-i18n="yourDevice">Dein Gerät</span>
+          <div class="head">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="var(--raised)"/><rect x="9" y="11" width="22" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 30h28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <h3>macOS</h3>
+          </div>
+          <p class="req" data-i18n="macReq">macOS 13 oder neuer, Mac mit Apple-Chip (M1 und neuer).</p>
+          <a class="btn" data-file="dmg" href="#" download><span data-i18n="downloadDmg">Image herunterladen</span></a>
+          <div class="meta" data-size="dmg"></div>
+        </article>
+      </div>
+      <div class="qr-card" id="phone" hidden>
+        <div class="qr" id="qr" role="img" aria-label="QR-Code dieser Seite"></div>
+        <div>
+          <h3 data-i18n="onPhone">Am Handy öffnen</h3>
+          <p class="muted" data-i18n="scan">Scanne den Code mit der Kamera deines Handys. Die Seite öffnet sich dort und bietet dir direkt die APK an.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" style="padding-top:24px">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="instEyebrow">Installation</div>
+        <h2 data-i18n="instTitle">In zwei Minuten startklar.</h2>
+        <p class="muted" data-i18n="instLead">JavOS ist (noch) nicht in einem App-Store. Deshalb fragt dein System einmal nach – so geht’s.</p>
+      </div>
+      <div class="install">
+        <details data-platform="android">
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Android</summary>
+          <ol class="steps">
+            <li data-i18n="a1">APK am Handy herunterladen und in der Benachrichtigung oder unter „Downloads“ antippen.</li>
+            <li data-i18n="a2">Beim ersten Mal fragt Android, ob dein Browser „unbekannte Apps installieren“ darf: erlauben, zurück, „Installieren“.</li>
+            <li data-i18n="a3">JavOS öffnen und Benachrichtigungen erlauben – für Erinnerungen, den Fokus-Timer und die Schnell-Erfassung.</li>
+            <li data-i18n="a4">Updates installierst du genauso über die alte Version; deine Daten bleiben erhalten.</li>
+          </ol>
+          <p class="note"><span data-i18n="adb">Vom Computer mit USB-Debugging:</span> <code>adb install -r JavOS-debug.apk</code></p>
+        </details>
+        <details data-platform="windows">
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Windows</summary>
+          <ol class="steps">
+            <li data-i18n="w1">Die heruntergeladene .msi-Datei öffnen.</li>
+            <li data-i18n="w2">Der Installer ist nicht signiert. Zeigt SmartScreen „Der Computer wurde durch Windows geschützt“: „Weitere Informationen“, dann „Trotzdem ausführen“.</li>
+            <li data-i18n="w3">JavOS findest du danach im Startmenü und auf dem Desktop. Schließt du das Fenster, läuft es im Infobereich weiter.</li>
+            <li data-i18n="w4">Schnell festhalten von überall: Strg + Umschalt + Leertaste.</li>
+          </ol>
+        </details>
+        <details data-platform="mac">
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg>macOS</summary>
+          <ol class="steps">
+            <li data-i18n="m1">Die .dmg öffnen und JavOS in den Ordner „Programme“ ziehen.</li>
+            <li data-i18n="m2">Die App ist nicht signiert. Beim ersten Start: Rechtsklick auf JavOS, „Öffnen“, bestätigen.</li>
+            <li><span><span data-i18n="m3">Alternativ einmal im Terminal:</span> <code>xattr -dr com.apple.quarantine /Applications/JavOS.app</code></span></li>
+            <li data-i18n="m4">Für Cmd + Umschalt + Leertaste: Systemeinstellungen › Datenschutz &amp; Sicherheit › Bedienungshilfen › JavOS erlauben.</li>
+          </ol>
+        </details>
+        <details>
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg><span data-i18n="checksums">Prüfsummen (SHA-256)</span></summary>
+          <div class="note" id="hashes"></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="privacy">
+        <div>
+          <h2 data-i18n="privTitle">Deine Gedanken bleiben bei dir.</h2>
+          <p data-i18n="privLead">JavOS hat keinen Server und kein Konto. Die Android-App hat nicht einmal die Berechtigung, ins Internet zu gehen.</p>
+        </div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="p1">Alles liegt in einer Datenbank auf deinem Gerät.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="p2">Keine Telemetrie, keine Werbung, keine Analyse.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="p3">Export als ZIP mit lesbaren JSON-Dateien – jederzeit.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/icon.svg" alt="" width="24" height="24">JavOS</a>
+    <span><span data-i18n="footer">Version</span> <span id="footVersion">1.0</span> · © 2026 Javo</span>
+  </div>
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
         integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
@@ -191,73 +428,95 @@
 <script>
 (function () {
   var en = {
-    tagline: "One capture box for every thought.",
-    latest: "Latest version",
-    download: "Download",
+    navFeatures: "Features", navThemes: "Themes", navInstall: "Install", navDownload: "Download",
+    pill: "Android · Windows · macOS",
+    h1a: "One capture box for", h1b: "every thought.",
+    lead: "Write down whatever is on your mind. JavOS saves it instantly, suggests what it is – deadline, idea, project – and shows you at most three things a day.",
+    ctaAll: "Download", ctaOther: "All platforms",
+    fact1: "Free", fact2: "Fully offline", fact3: "No account", fact4: "English & German",
+    featEyebrow: "Features", featTitle: "Small enough to stick with.",
+    featLead: "Made for short bursts of 15 to 20 minutes. No lists that explode – just what matters today.",
+    f1t: "Understands English and German",
+    f1p: "“by Friday”, “bis Freitag”, “20.11. at 2pm”, “€12.50”, links and project names. Clear cases are sorted right away; for everything else JavOS asks “Did you mean?” – without interrupting you.",
+    ex1: "→ Deadline · Fri 20 Nov · €45.50", ex2: "→ Idea", ex3: "→ Project JavOS",
+    f2t: "Today: at most three things", f2p: "Overdue first, then what is due today, then one next step per project. Start, swap or skip.",
+    f3t: "Focus timer", f3p: "15, 20 or your own minutes. Keeps running in the background and tells you when time is up.",
+    f4t: "Modules as you need them", f4p: "Deadlines with reminders, projects (at most three active), notes with Markdown, calculators for rule of three, VAT, kW/hp and trip costs. Each can be switched off.",
+    f5t: "Weekly review", f5p: "What got done, what slipped, which projects have been resting for three weeks – park or drop?",
+    f6t: "Capture from anywhere", f6p: "Share menu, voice input, reply right in the notification and a home-screen widget. On the computer: Ctrl/Cmd + Shift + Space.",
+    themesEyebrow: "Themes", themesTitle: "Five themes, each light and dark.", themesLead: "Switch any time in Settings – instantly, no restart.",
+    tDaylight: "Light, friendly, rounded", tCluster: "Black with instrument readouts", tSchematic: "Like a technical drawing", tHochvolt: "Charcoal with high-voltage orange", tFable: "A quiet notebook", tDaylightDark: "Dark mode",
+    dlEyebrow: "Download", dlTitle: "For all your devices.", dlLead: "Version",
     yourDevice: "Your device",
-    androidReq: "Android 8.0 or newer. Works on foldables too.",
-    windowsReq: "Windows 10 or 11, 64-bit.",
-    macReq: "macOS 13 or newer, Apple silicon Mac (M1 and newer).",
-    downloadApk: "Download APK",
-    downloadMsi: "Download installer (.msi)",
-    downloadDmg: "Download disk image (.dmg)",
-    onPhone: "Open on your phone",
-    scan: "Scan the code with your phone camera. The page opens there and offers the APK.",
-    install: "Install",
+    androidReq: "Android 8.0 or newer. Works on foldables like the Honor Magic V5.",
+    windowsReq: "Windows 10 or 11, 64-bit. Keeps running in the tray.",
+    macReq: "macOS 13 or newer, Mac with Apple silicon (M1 and newer).",
+    downloadApk: "Download APK", downloadMsi: "Download installer", downloadDmg: "Download disk image",
+    onPhone: "Open on your phone", scan: "Scan the code with your phone camera. The page opens there and offers you the APK.",
+    instEyebrow: "Install", instTitle: "Ready in two minutes.", instLead: "JavOS is not in an app store (yet), so your system asks once – here is how.",
     a1: "Download the APK on the phone and tap it in the notification or in Downloads.",
     a2: "The first time, Android asks whether your browser may “install unknown apps”: allow it, go back, tap Install.",
-    a3: "Start JavOS and allow notifications (reminders, focus timer, quick capture).",
-    a4: "New versions install over the old one; your data stays.",
+    a3: "Open JavOS and allow notifications – for reminders, the focus timer and quick capture.",
+    a4: "Install updates the same way over the old version; your data stays.",
     adb: "From a computer with USB debugging:",
-    w1: "Run the .msi file.",
+    w1: "Open the downloaded .msi file.",
     w2: "The installer is not signed. If SmartScreen says “Windows protected your PC”: More info, then Run anyway.",
-    w3: "JavOS is then in the Start menu. Closing the window keeps it running in the tray; quit from the tray menu.",
-    w4: "Capture from anywhere: Ctrl+Shift+Space.",
+    w3: "JavOS is then in the Start menu and on the desktop. Closing the window keeps it running in the tray.",
+    w4: "Capture from anywhere: Ctrl + Shift + Space.",
     m1: "Open the .dmg and drag JavOS to Applications.",
     m2: "The app is not signed. The first time: right-click JavOS, Open, confirm.",
     m3: "Or once in Terminal:",
-    m4: "For the Cmd+Shift+Space shortcut: System Settings › Privacy & Security › Accessibility › allow JavOS.",
+    m4: "For Cmd + Shift + Space: System Settings › Privacy & Security › Accessibility › allow JavOS.",
     checksums: "Checksums (SHA-256)",
-    offline: "JavOS works fully offline: no account, no network, no telemetry. Your data stays on your device.",
-    unsigned: "The builds are not signed (Android: debug build). Only download them from this page."
+    privTitle: "Your thoughts stay with you.",
+    privLead: "JavOS has no server and no account. The Android app does not even have permission to go online.",
+    p1: "Everything lives in one database on your device.", p2: "No telemetry, no ads, no analytics.", p3: "Export as a ZIP of readable JSON files – any time.",
+    footer: "Version"
   };
   var lang = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
   if (lang === "en") {
     document.documentElement.lang = "en";
-    document.title = "Download JavOS";
+    document.title = "JavOS – One capture box for every thought";
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
       if (en[key]) el.textContent = en[key];
     });
+    document.querySelectorAll("img[data-shot]").forEach(function (img) { img.src = img.getAttribute("src").replace("-de.png", "-en.png"); });
+    var shot = document.getElementById("desktopShot");
+    shot.alt = "JavOS on the desktop: projects with list and detail";
   }
 
-  // Which device is this? Used to highlight the right download and open its install steps.
+  // Sticky navigation gets a hairline once the page scrolls.
+  var nav = document.getElementById("nav");
+  var onScroll = function () { nav.classList.toggle("scrolled", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Which device is this? Highlight its download and open its install steps.
   var ua = navigator.userAgent || "";
   var platform = /Android/i.test(ua) ? "android"
     : /iPhone|iPad|iPod/i.test(ua) ? "ios"
     : /Mac/i.test(ua) && navigator.maxTouchPoints > 1 ? "ios"
     : /Mac/i.test(ua) ? "mac"
     : /Win/i.test(ua) ? "windows" : "other";
-  if (platform === "android" || platform === "windows" || platform === "mac") {
-    var card = document.querySelector('.card[data-platform="' + platform + '"]');
-    if (card) {
-      card.classList.add("you");
-      card.querySelector("[data-you]").hidden = false;
-      card.parentNode.insertBefore(card, card.parentNode.firstChild);
-    }
+  var names = { android: "Android", windows: "Windows", mac: "macOS" };
+  var known = names[platform] !== undefined;
+  if (known) {
+    var card = document.querySelector('.dl[data-platform="' + platform + '"]');
+    card.classList.add("you");
+    card.querySelector("[data-you]").hidden = false;
+    card.parentNode.insertBefore(card, card.parentNode.firstChild);
     var steps = document.querySelector('details[data-platform="' + platform + '"]');
     if (steps) steps.open = true;
+    document.querySelectorAll('.dl:not([data-platform="' + platform + '"]) .btn').forEach(function (b) { b.classList.add("secondary"); });
+    document.getElementById("primaryCtaText").textContent = (lang === "de" ? "Für " + names[platform] + " herunterladen" : "Download for " + names[platform]);
   }
-  document.querySelectorAll('.card:not([data-platform="' + platform + '"]) .btn').forEach(function (b) {
-    if (platform !== "other" && platform !== "ios") b.classList.add("secondary");
-  });
 
-  // On a computer, show a QR code so the phone can open this page.
+  // On a computer: a QR code so the phone can open this page.
   var pageUrl = location.href.split("#")[0];
-  document.getElementById("pageUrl").textContent = pageUrl;
-  if (platform !== "android" && platform !== "ios" && window.QRCode) {
+  if (platform !== "android" && platform !== "ios" && window.QRCode && /^https?:/.test(pageUrl)) {
     document.getElementById("phone").hidden = false;
-    new QRCode(document.getElementById("qr"), { text: pageUrl, width: 148, height: 148, colorDark: "#111114", colorLight: "#FFFFFF", correctLevel: QRCode.CorrectLevel.M });
+    new QRCode(document.getElementById("qr"), { text: pageUrl, width: 120, height: 120, colorDark: "#111114", colorLight: "#FFFFFF", correctLevel: QRCode.CorrectLevel.M });
   }
 
   function size(bytes) {
@@ -266,12 +525,11 @@
   }
 
   fetch("release.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (rel) {
-    document.getElementById("version").textContent = rel.version;
+    ["version", "versionPill", "footVersion"].forEach(function (id) { document.getElementById(id).textContent = rel.version; });
     var d = new Date(rel.published);
-    var dateText = lang === "de"
-      ? d.toLocaleDateString("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" })
-      : d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-    document.getElementById("date").textContent = (lang === "de" ? "Veröffentlicht am " : "Released ") + dateText;
+    document.getElementById("date").textContent = lang === "de"
+      ? "veröffentlicht am " + d.toLocaleDateString("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" })
+      : "released " + d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
     var hashes = [];
     Object.keys(rel.files).forEach(function (key) {
       var f = rel.files[key];
@@ -279,12 +537,16 @@
       if (link) { link.href = f.url; link.setAttribute("download", f.name); }
       var s = document.querySelector('[data-size="' + key + '"]');
       if (s) s.textContent = f.name + " · " + size(f.size);
-      hashes.push('<p><strong>' + f.name + '</strong><br><span class="hash">' + f.sha256 + '</span></p>');
+      hashes.push("<p><strong>" + f.name + "</strong><br><span class=\"hash\">" + f.sha256 + "</span></p>");
     });
     document.getElementById("hashes").innerHTML = hashes.join("");
-  }).catch(function () {
-    document.getElementById("version").textContent = "–";
-  });
+    if (known) {
+      var file = { android: "apk", windows: "msi", mac: "dmg" }[platform];
+      var cta = document.getElementById("primaryCta");
+      cta.href = rel.files[file].url;
+      cta.setAttribute("download", rel.files[file].name);
+    }
+  }).catch(function () { /* the page still works: the buttons scroll to the download section */ });
 })();
 </script>
 </body>

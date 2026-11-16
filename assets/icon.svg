@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26262D"/><stop offset="1" stop-color="#0C0C0F"/></linearGradient>
+    <linearGradient id="cur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2AEFF"/><stop offset="1" stop-color="#8E7CFF"/></linearGradient>
+  </defs>
+  <rect x="0" y="0" width="108" height="108" rx="24" fill="url(#bg)"/>
+  <g transform="translate(54 54) scale(1.26) translate(-54 -54)">
+    <path fill="#FFFFFF" d="M60.93,36L60.93,61.02Q60.93,66.23 57.92,69.12Q54.91,72 49.86,72Q44.75,72 41.61,69.04Q38.47,66.07 38.47,60.77L45.61,60.77Q45.67,63.06 46.72,64.34Q47.76,65.62 49.76,65.62Q51.69,65.62 52.72,64.4Q53.74,63.17 53.74,61.02L53.74,36L60.93,36Z"/>
+    <path fill="url(#cur)" d="M66.13,36.5L66.13,71.5C66.13,72.88 67.25,74 68.63,74L68.63,74C70.01,74 71.13,72.88 71.13,71.5L71.13,36.5C71.13,35.12 70.01,34 68.63,34L68.63,34C67.25,34 66.13,35.12 66.13,36.5Z"/>
+  </g>
+</svg>
