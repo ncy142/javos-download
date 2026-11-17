@@ -1,10 +1,10 @@
 {
-  "version": "1.0.1",
-  "tag": "v1.0.1",
-  "published": "2026-11-16T18:09:28Z",
+  "version": "1.0.2",
+  "tag": "v1.0.2",
+  "published": "2026-11-17T04:38:24Z",
   "files": {
-    "apk": { "name": "JavOS-debug.apk", "size": 15080751, "sha256": "2ea1491e4a604d285c8f32f70cccbaaab919223fd2aa9c459107a7fd68619c1f", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.1/JavOS-debug.apk" },
-    "msi": { "name": "JavOS-1.0.1.msi", "size": 106561297, "sha256": "f0c1011667e68f375209755aa48e149a763a842ddec9f46c35ae95d9e54c6a17", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.1/JavOS-1.0.1.msi" },
-    "dmg": { "name": "JavOS-1.0.1.dmg", "size": 118015512, "sha256": "14413d836d6e32a2e17b462aa377cc178729947906f12159c2473ef29c5c32fe", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.1/JavOS-1.0.1.dmg" }
+    "apk": { "name": "JavOS-1.0.2.apk", "size": 11355402, "sha256": "8b28c633d4c5ab4f2c527ab189eb49bfcfd6bec579a721833c4190c5b2cc7b03", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.2/JavOS-1.0.2.apk" },
+    "msi": { "name": "JavOS-1.0.2.msi", "size": 106561298, "sha256": "0d0043b290760456ef7ca68f98bfa8d0734e9a94414613564bd8f6771a35e3e4", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.2/JavOS-1.0.2.msi" },
+    "dmg": { "name": "JavOS-1.0.2.dmg", "size": 118023857, "sha256": "e948116f210d56cb9b0d7999a4bc03962b32ae87a8cb9d4a33830c5dfc837138", "url": "https://github.com/ncy142/javos-download/releases/download/v1.0.2/JavOS-1.0.2.dmg" }
   }
 }

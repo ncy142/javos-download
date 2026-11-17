@@ -10,6 +10,7 @@
 </p>
 
 This repository only holds the download page and the release builds. The source code is private.
-The builds are unsigned; install notes are on the download page.
+The Android APK is signed with the JavOS release key (from 1.0.2 on). The Windows and macOS
+installers are not code-signed; install notes are on the download page.
 
 Fonts: Poppins, SIL Open Font License (`assets/fonts/OFL.txt`).

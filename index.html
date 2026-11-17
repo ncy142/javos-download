@@ -370,7 +370,8 @@
             <li data-i18n="a3">JavOS öffnen und Benachrichtigungen erlauben – für Erinnerungen, den Fokus-Timer und die Schnell-Erfassung.</li>
             <li data-i18n="a4">Updates installierst du genauso über die alte Version; deine Daten bleiben erhalten.</li>
           </ol>
-          <p class="note"><span data-i18n="adb">Vom Computer mit USB-Debugging:</span> <code>adb install -r JavOS-debug.apk</code></p>
+          <p class="note" data-i18n="aOld">Du hattest JavOS 1.0 oder 1.0.1 installiert? Das waren Testversionen mit einer anderen Signatur. Einmalig: in der alten App unter Einstellungen › Daten „Alles exportieren (zip)“ wählen, die alte App deinstallieren, die neue installieren und dort „Aus zip importieren“.</p>
+          <p class="note"><span data-i18n="adb">Vom Computer mit USB-Debugging:</span> <code id="adbCmd">adb install -r JavOS.apk</code></p>
         </details>
         <details data-platform="windows">
           <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Windows</summary>
@@ -458,6 +459,7 @@
     a2: "The first time, Android asks whether your browser may “install unknown apps”: allow it, go back, tap Install.",
     a3: "Open JavOS and allow notifications – for reminders, the focus timer and quick capture.",
     a4: "Install updates the same way over the old version; your data stays.",
+    aOld: "Had JavOS 1.0 or 1.0.1 installed? Those were test builds with a different signature. Once: in the old app choose “Export everything (zip)” under Settings › Data, uninstall the old app, install the new one and use “Import from zip” there.",
     adb: "From a computer with USB debugging:",
     w1: "Open the downloaded .msi file.",
     w2: "The installer is not signed. If SmartScreen says “Windows protected your PC”: More info, then Run anyway.",
@@ -540,6 +542,7 @@
       hashes.push("<p><strong>" + f.name + "</strong><br><span class=\"hash\">" + f.sha256 + "</span></p>");
     });
     document.getElementById("hashes").innerHTML = hashes.join("");
+    if (rel.files.apk) document.getElementById("adbCmd").textContent = "adb install -r " + rel.files.apk.name;
     if (known) {
       var file = { android: "apk", windows: "msi", mac: "dmg" }[platform];
       var cta = document.getElementById("primaryCta");
